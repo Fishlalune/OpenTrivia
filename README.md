@@ -69,4 +69,4 @@ Check out the links below for details on how to use Open Trivia for your own eve
   - Intended for developers who wish to extend Open Trivia functionality. 
 
 ## License
-Open Trivia is licensed under the MIT license. You can view more information about this license in the [license.txt file](LICENSE.txt). 
+Open Trivia is licensed under the MIT license. You can view more information about this license in the [license.txt file](LICENSE.txt). # Trivia
