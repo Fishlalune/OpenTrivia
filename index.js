@@ -170,24 +170,22 @@ app.get('/brackets/findTeamBracket', async (req, res) => {
 
 let userdb = []; 
 let questiondb = []; 
+let totalTeams = 0; 
+const papaParse = require('papaparse'); 
 function loadSheets(){
-  tabletop.init({
-    key: process.env.OT_USERS, 
-    simpleSheet: true
-  }).then((dt) => {
-    userdb = dt; 
-    totalTeams = dt.length; 
-    logger.info(`Loaded UserDB (${dt.length} entries)`)
-  });
-  tabletop.init({
-    key: process.env.OT_QUESTIONS, 
-    simpleSheet: true
-  }).then((dt) => {
-    questiondb = dt; 
-    logger.info(`Loaded QuestionDB (${dt.length} entries)`); 
-  }); 
+  questiondb = papaParse.parse(fs.readFileSync(path.join(__dirname, 'questions.csv'), 'utf-8'), {
+    header: true
+  }).data; 
+  logger.info(`Loaded QuestionDB (${questiondb.length} entries)`);
+  userdb = papaParse.parse(fs.readFileSync(path.join(__dirname, 'teams.csv'), 'utf-8'), {
+    header: true
+  }).data; 
+  totalTeams = userdb.length; 
+  logger.info(`Loaded UserDB (${userdb.length} entries)`); 
 }
 loadSheets(); 
+
+
 
 
 function lookupUser(teamPIN){
@@ -430,8 +428,6 @@ function getUserConfig() {
     }
   }; 
 }
-
-let totalTeams = 0; 
 
 // End of messages
 // Question management
